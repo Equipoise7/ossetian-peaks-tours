@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 import { readFileSync, writeFileSync } from "fs";
 
 // Plugin to create 404.html from index.html after build
-const create404Html = () => {
+const create404Html = (basePath: string) => {
   return {
     name: "create-404-html",
     closeBundle() {
@@ -19,12 +19,17 @@ const create404Html = () => {
         const indexHtmlPath = path.resolve(__dirname, "dist/index.html");
         const indexHtml = readFileSync(indexHtmlPath, "utf-8");
         
+        // Calculate segment count based on base path
+        // If base is '/', segmentCount is 0 (root)
+        // If base is '/repo-name/', segmentCount is 1
+        const segmentCount = basePath === '/' ? 0 : basePath.split('/').filter(s => s).length;
+        
         // Create 404.html with redirect script
         const redirectScript = `
     <script>
       // GitHub Pages SPA redirect handler
       (function() {
-        var segmentCount = 0; // Set to 1 if your site is in a subdirectory (e.g., /repo-name)
+        var segmentCount = ${segmentCount}; // Automatically set based on base path
         var l = window.location;
         var pathname = l.pathname;
         var search = l.search;
@@ -52,7 +57,7 @@ const create404Html = () => {
         
         // Write 404.html
         writeFileSync(path.resolve(__dirname, "dist/404.html"), htmlWithRedirect, "utf-8");
-        console.log("✓ Created 404.html for GitHub Pages");
+        console.log(`✓ Created 404.html for GitHub Pages (base: ${basePath})`);
       } catch (error) {
         console.error("Error creating 404.html:", error);
       }
@@ -61,19 +66,32 @@ const create404Html = () => {
 };
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
-    react(), 
-    mode === "development" && componentTagger(),
-    create404Html(), // Always create 404.html on build
-  ].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+export default defineConfig(({ mode }) => {
+  // Base path for GitHub Pages
+  // IMPORTANT: Set this based on your GitHub Pages URL:
+  // - If your site is at https://username.github.io/repo-name/, set base to '/repo-name/'
+  // - If your site is at https://username.github.io/ (root repo), set base to '/'
+  // You can override this via environment variable: VITE_BASE_PATH
+  // 
+  // Default: '/ossetian-peaks-tours/' (for project repos)
+  // Change to '/' if you're using a root GitHub Pages repo (username.github.io)
+  const basePath = process.env.VITE_BASE_PATH || '/ossetian-peaks-tours/';
+  
+  return {
+    base: basePath,
+    server: {
+      host: "::",
+      port: 8080,
     },
-  },
-}));
+    plugins: [
+      react(), 
+      mode === "development" && componentTagger(),
+      create404Html(basePath), // Always create 404.html on build
+    ].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
+  };
+});

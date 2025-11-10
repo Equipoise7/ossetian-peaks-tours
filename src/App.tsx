@@ -37,12 +37,20 @@ const RedirectHandler = () => {
   return null;
 };
 
+// Get base path from environment or use default
+// This should match the base path in vite.config.ts
+const getBasePath = () => {
+  // In production, Vite replaces import.meta.env.BASE_URL with the actual base path
+  // This ensures BrowserRouter uses the same base path as Vite
+  return import.meta.env.BASE_URL || '/';
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={getBasePath()}>
         <RedirectHandler />
         <Routes>
           <Route path="/" element={<Index />} />
