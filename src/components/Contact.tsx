@@ -6,12 +6,16 @@ const Contact = () => {
   const phoneNumber = "+79991234567"; // Replace with actual number
 
   return (
-    <section className="py-20 bg-gradient-hero text-white">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gradient-hero text-white relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-20 left-10 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
           Свяжитесь с нами
         </h2>
-        <p className="text-center text-white/90 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-white/90 mb-12 max-w-2xl mx-auto text-lg">
           Готовы ответить на все ваши вопросы и помочь организовать незабываемое путешествие
         </p>
 

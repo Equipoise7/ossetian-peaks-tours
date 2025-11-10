@@ -39,6 +39,10 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -106,11 +110,14 @@ export default {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-sky': 'var(--gradient-sky)',
         'gradient-overlay': 'var(--gradient-overlay)',
+        'gradient-card': 'var(--gradient-card)',
+        'gradient-accent': 'var(--gradient-accent)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'medium': 'var(--shadow-medium)',
         'strong': 'var(--shadow-strong)',
+        'glow': 'var(--shadow-glow)',
       },
     },
   },

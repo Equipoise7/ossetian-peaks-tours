@@ -28,12 +28,16 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-20 bg-secondary/30">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gradient-to-b from-secondary/20 to-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-foreground">
           Наши услуги
         </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto text-lg">
           Профессиональный подход к каждому клиенту
         </p>
         
@@ -41,12 +45,15 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="border-none shadow-soft hover:shadow-strong transition-all duration-300 hover:scale-105 animate-fade-in-scale"
+              className="group border-none shadow-medium hover:shadow-strong transition-all duration-500 hover:scale-105 animate-fade-in-scale bg-card overflow-hidden relative"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <CardContent className="p-8">
-                <div className="mb-6 inline-block p-4 bg-primary/10 rounded-lg">
-                  <service.icon className="w-12 h-12 text-primary" />
+              {/* Gradient accent on hover */}
+              <div className="absolute inset-0 bg-gradient-card opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
+              
+              <CardContent className="p-8 relative z-10">
+                <div className="mb-6 inline-block p-4 bg-gradient-card rounded-xl shadow-soft group-hover:shadow-glow transition-all duration-300 group-hover:scale-110">
+                  <service.icon className="w-12 h-12 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-foreground">
                   {service.title}
