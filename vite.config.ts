@@ -69,13 +69,13 @@ const create404Html = (basePath: string) => {
 export default defineConfig(({ mode }) => {
   // Base path for GitHub Pages
   // IMPORTANT: Set this based on your GitHub Pages URL:
-  // - If your site is at https://username.github.io/repo-name/, set base to '/repo-name/'
   // - If your site is at https://username.github.io/ (root repo), set base to '/'
+  // - If your site is at https://username.github.io/repo-name/, set base to '/repo-name/'
   // You can override this via environment variable: VITE_BASE_PATH
   // 
-  // Default: '/ossetian-peaks-tours/' (for project repos)
-  // Change to '/' if you're using a root GitHub Pages repo (username.github.io)
-  const basePath = process.env.VITE_BASE_PATH || '/ossetian-peaks-tours/';
+  // Based on the error URL (equipoise7.github.io), the site is in the root, so base is '/'
+  // If your site is in a subdirectory, change this to '/ossetian-peaks-tours/'
+  const basePath = process.env.VITE_BASE_PATH || '/';
   
   return {
     base: basePath,
